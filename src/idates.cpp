@@ -1,7 +1,8 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// Helper function to calculate the day of the week (1 = Monday, ..., 7 = Sunday)
+//' Helper function to calculate the day of the week (1 = Monday, ..., 7 = Sunday)
+//' @export
 // [[Rcpp::export]]
 int day_of_week(int year, int month, int day) {
     if (month < 3) {
@@ -23,13 +24,16 @@ bool is_leap_year(int year) {
 std::vector<int> cumulative_days_normal = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
 std::vector<int> cumulative_days_leap = {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
 
-// Inline calculation of day of the year
+//' Calculation of day of the year
+//' @export
+// [[Rcpp::export]]
 int day_of_year(int year, int month, int day) {
     const std::vector<int>& cumulative_days = is_leap_year(year) ? cumulative_days_leap : cumulative_days_normal;
     return cumulative_days[month - 1] + day;
 }
 
-// Main function to calculate ISO week and year
+//' Calculate ISO week and year
+//' @export
 // [[Rcpp::export]]
 IntegerVector iso_week_and_year(int year, int month, int day) {
     // Calculate the day of the week for the given date

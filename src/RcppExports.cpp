@@ -35,6 +35,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// day_of_year
+int day_of_year(int year, int month, int day);
+RcppExport SEXP _idates_day_of_year(SEXP yearSEXP, SEXP monthSEXP, SEXP daySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type year(yearSEXP);
+    Rcpp::traits::input_parameter< int >::type month(monthSEXP);
+    Rcpp::traits::input_parameter< int >::type day(daySEXP);
+    rcpp_result_gen = Rcpp::wrap(day_of_year(year, month, day));
+    return rcpp_result_gen;
+END_RCPP
+}
 // iso_week_and_year
 IntegerVector iso_week_and_year(int year, int month, int day);
 RcppExport SEXP _idates_iso_week_and_year(SEXP yearSEXP, SEXP monthSEXP, SEXP daySEXP) {
@@ -52,6 +65,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_idates_group_by_frequency", (DL_FUNC) &_idates_group_by_frequency, 2},
     {"_idates_day_of_week", (DL_FUNC) &_idates_day_of_week, 3},
+    {"_idates_day_of_year", (DL_FUNC) &_idates_day_of_year, 3},
     {"_idates_iso_week_and_year", (DL_FUNC) &_idates_iso_week_and_year, 3},
     {NULL, NULL, 0}
 };

@@ -1,3 +1,4 @@
+#' IDate class, a date represented by three integers, Year, Month and Day.
 #' @export
 setClass("IDate", slots = list(
   Year = "integer",
@@ -5,6 +6,9 @@ setClass("IDate", slots = list(
   Day = "integer"
 ))
 
+#' Convert a list of string on the format YYYY-MM-DD to a list of IDate
+#' @param x The list of strings
+#' @return A list of IDate
 #' @export
 as.IDates <- function (x) {
   parts <- strsplit(x, "-", fixed = TRUE)
@@ -26,22 +30,29 @@ as.IDates <- function (x) {
   return(dates)
 }
 
+#' Show a IDate, used for printing etc.
 #' @export
 setMethod("show", "IDate", function (object) {
   print(toString(object))
 })
 
+#' S3 Method to convert an IDate to string for printing or further parsing, calls the S4 method
 #' @method toString IDate
 #' @export
 toString.IDate <- function(x, ...) {
   toString(as(x, "IDate"))
 }
 
+#' S4 Method to convert an IDate to string for printing or further parsing
 #' @export
 setMethod("toString", "IDate", function (x, ...) {
   paste(sprintf("%04d", x@Year), sprintf("%02d", x@Month), sprintf("%02d", x@Day), sep = "-")
 })
 
+#' Add a number of periods in a certain frequency to an IDate
+#' @param x The IDate
+#' @param n The number of periods to add
+#' @param frequency Integer representing the frequency of the n periods to add
 #' @export
 addPeriods <- function (x, n, frequency) {
   if (frequency == 1) {
@@ -60,11 +71,15 @@ addPeriods <- function (x, n, frequency) {
   return(x)
 }
 
+#' Calculate the difference in months between two IDate
 #' @export
 monthDiff <- function (x, y) {
   return((x@Year - y@Year) * 12 + x@Month - y@Month)
 }
 
+#' Set an IDate to the start of period
+#' @param x The IDate
+#' @param frequency The frequency to set the IDate to the start of period of
 #' @export
 startOfPeriod <- function (x, frequency) {
   if (frequency == 1) {
@@ -75,24 +90,28 @@ startOfPeriod <- function (x, frequency) {
   }
 }
 
+#' Convert an IDate to POSIXlt
 #' @export
 as.POSIXlt.IDate <- function(x, ...) {
   date_string <- toString.IDate(x)
   as.POSIXlt(date_string)
 }
 
+#' Convert POSIXlt to IDate
 #' @export
 as.IDate.POSIXlt <- function (x) {
   date_string <- format(x, "%Y-%m-%d")
   as.IDates(date_string)[[1]]
 }
 
+#' Shift an IDate to a certain day of week
 #' @export
 toDoW.IDate <- function (x, dow) {
   c_dow <- day_of_week(x@Year, x@Month, x@Day)
   return(addPeriods(x, dow - c_dow + 1, 365))
 }
 
+#' Comparison operator
 #' @export
 setMethod(">=", signature(e1 = "IDate", e2 = "IDate"), function(e1, e2) {
   return(

@@ -5,7 +5,7 @@
 
 extern Rcpp::IntegerVector iso_week_and_year(int year, int month, int day);
 
-// The main function to implement the logic similar to the R code.
+//' @export
 // [[Rcpp::export]]
 Rcpp::List group_by_frequency(Rcpp::List vardates, int freq) {
     std::vector<std::vector<int>> idxs(vardates.size());
