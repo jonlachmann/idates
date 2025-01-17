@@ -16,9 +16,9 @@ Rcpp::List group_by_frequency(Rcpp::List vardates, int freq) {
     // Loop over each date in vardates
     for (size_t i = 0; i < vardates.size(); ++i) {
         Rcpp::S4 date_obj = vardates[i];  // Extract the S4 object
-        int year = as<int>(date_obj.slot("Year"));
-        int month = as<int>(date_obj.slot("Month"));
-        int day = as<int>(date_obj.slot("Day"));
+        int year = Rcpp::as<int>(date_obj.slot("Year"));
+        int month = Rcpp::as<int>(date_obj.slot("Month"));
+        int day = Rcpp::as<int>(date_obj.slot("Day"));
         int date = 0;
 
         // Compute date based on frequency
